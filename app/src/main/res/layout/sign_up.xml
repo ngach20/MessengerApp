@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/profile_pic"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/top_margin_pfp"
+        app:layout_constraintBottom_toTopOf="@+id/fields"
+        android:layout_width="@dimen/pfp_width"
+        android:layout_height="@dimen/pfp_height"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/avatar_image_placeholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <Button
+        android:id="@+id/button_login"
+        android:layout_marginTop="@dimen/margin_button"
+        android:backgroundTint="@color/def_sign_in"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="wrap_content"
+        android:text="@string/text_button_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/fields"
+        >
+    </Button>
+
+
+    <LinearLayout
+        android:id="@+id/fields"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_pic"
+        android:layout_marginTop="@dimen/margin_pfp"
+        >
+
+        <EditText
+            android:id="@+id/field_nick"
+            android:backgroundTint="@color/tint_def_white"
+            android:hint="@string/hint_nickname"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="@dimen/height_field"
+            android:background="@drawable/field_frame"
+            android:layout_width="@dimen/width_field"
+            android:textAlignment="center"
+            >
+        </EditText>
+        <EditText
+            android:id="@+id/field_pass"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/field_margin"
+            android:layout_width="@dimen/width_field"
+            android:textAlignment="center"
+            android:inputType="textPassword"
+            android:background="@drawable/field_frame"
+            android:backgroundTint="@color/tint_def_white"
+            android:hint="@string/hint_pass"
+            android:layout_height="@dimen/height_field"
+            >
+        </EditText>
+        <EditText
+            android:id="@+id/field_job"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/field_margin"
+            android:layout_width="@dimen/width_field"
+            android:textAlignment="center"
+            android:inputType="textPassword"
+            android:background="@drawable/field_frame"
+            android:backgroundTint="@color/tint_def_white"
+            android:hint="@string/hint_job"
+            android:layout_height="@dimen/height_field"
+            >
+        </EditText>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
