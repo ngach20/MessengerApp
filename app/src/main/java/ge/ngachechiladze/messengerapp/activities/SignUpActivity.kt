@@ -1,5 +1,8 @@
 package ge.ngachechiladze.messengerapp.activities
 
+import android.app.Activity
+import android.app.Instrumentation.ActivityResult
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
@@ -49,6 +52,11 @@ class SignUpActivity : AppCompatActivity() {
                     Toast.makeText(this@SignUpActivity, "Username already exists!", Toast.LENGTH_SHORT).show()
                 } else {
                     userRef.setValue(user)
+                    val result = Intent()
+                    result.putExtra("nickname", user.nickname)
+                    result.putExtra("passwordHash", user.passwordHash)
+                    setResult(Activity.RESULT_OK, result)
+                    finish()
                 }
             }
 

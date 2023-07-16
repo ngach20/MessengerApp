@@ -1,10 +1,12 @@
 package ge.ngachechiladze.messengerapp.activities
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -19,14 +21,28 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: SignInBinding
 
+    private val registerActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data: Intent? = result.data
+            data?.let {
+                val nickname = it.getStringExtra("nickname")
+                val passwordHash = it.getStringExtra("passwordHash")
+
+                if (nickname != null && passwordHash != null) {
+                    login(nickname, passwordHash)
+                }
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = SignInBinding.inflate(LayoutInflater.from(this))
+        binding = SignInBinding.inflate(LayoutInflater.from(this))
 
         binding.signUpButton.setOnClickListener {
             val intent = Intent(this@MainActivity, SignUpActivity::class.java)
-            startActivity(intent)
+            registerActivityResult.launch(intent)
         }
 
         binding.signInButton.setOnClickListener {
@@ -35,23 +51,16 @@ class MainActivity : AppCompatActivity() {
                 val nickname = binding.usernameEditText.text.toString().trim()
                 val password = binding.passwordEditText.text.toString().trim()
 
-                login(nickname, password)
+                login(nickname, Hasher.hashString(password))
             }else{
                 Toast.makeText(this@MainActivity, "Please fill all fields!", Toast.LENGTH_SHORT).show()
             }
         }
-//        val myRef = database.getReference("message")
-//
-//        myRef.setValue("Hello, World!")
-
-
 
         setContentView(binding.root)
     }
 
-    private fun login(nickname: String, password: String){
-        val passwordHash = Hasher.hashString(password)
-
+    fun login(nickname: String, passwordHash: String){
         val usersRef = Firebase.database.getReference("users/$nickname")
 
         usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -65,8 +74,13 @@ class MainActivity : AppCompatActivity() {
 
                             //Password is correct
                             if(retrievedPasswordHash == passwordHash){
-                                /** -------Authenticate----------- */
+                                /** TODO -------Authenticate----------- */
+
                                 Toast.makeText(this@MainActivity, "Login successful", Toast.LENGTH_SHORT).show()
+
+                                /** TODO --------Start new activity------ */
+
+                                finish()
                             }else{
                                 Toast.makeText(this@MainActivity, "Incorrect user information", Toast.LENGTH_SHORT).show()
                                 Log.d("LOGIN", "Incorrect password")
