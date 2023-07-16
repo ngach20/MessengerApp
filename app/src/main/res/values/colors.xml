@@ -8,6 +8,15 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="tint_def_white">#EFF4F4</color>
-    <color name="def_sign_in">#5479F1</color>
 
+    <color name="color_text_field">#f3f6ff</color>
+    <color name="color_text_field_hint">#afb1b5</color>
+    <color name="color_text_field_text">#7f818a</color>
+
+    <color name="color_text_button_primary">#FFFFFFFF</color>
+    <color name="color_button_primary">#547cf4</color>
+
+    <color name="color_text_button_secondary">#747474</color>
+    <color name="color_border_button_secondary">#747474</color>
+    <color name="color_button_secondary">#FFFFFFFF</color>
 </resources>

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "640740802545",
+    "firebase_url": "https://messengerapp-acfa2-default-rtdb.firebaseio.com",
+    "project_id": "messengerapp-acfa2",
+    "storage_bucket": "messengerapp-acfa2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640740802545:android:f74ec70b4777d60ce9ce50",
+        "android_client_info": {
+          "package_name": "ge.ngachechiladze.messengerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "640740802545-hijdbbt3qh0b62asdtn6ijt60cnbun0b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAE_SsrBmDSk9r-1KlWeCqptb5EgAZvX9Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "640740802545-hijdbbt3qh0b62asdtn6ijt60cnbun0b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

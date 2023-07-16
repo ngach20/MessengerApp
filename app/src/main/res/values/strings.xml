@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">messenger</string>
-    <string name="hint_nickname">enter nickname</string>
-    <string name="hint_pass">enter password</string>
-    <string name="hint_job">what I do</string>
-    <string name="text_button_login">LOGIN</string>
+    <string name="hint_nickname">Enter your nickname</string>
+    <string name="hint_pass">Enter your password</string>
+    <string name="hint_job">What I do</string>
+    <string name="text_button_login">SIGN IN</string>
     <string name="text_button_signup">SIGN UP</string>
     <string name="text_not_registered">Not registered?</string>
 </resources>
