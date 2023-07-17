@@ -1,86 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
+    <!-- Profile Picture -->
     <ImageView
-        android:id="@+id/profile_pic"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/top_margin_pfp"
-        app:layout_constraintBottom_toTopOf="@+id/fields"
-        android:layout_width="@dimen/pfp_width"
-        android:layout_height="@dimen/pfp_height"
-        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/profilePicture"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:src="@drawable/avatar_image_placeholder"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/inputLayout"
+
+        android:layout_marginTop="@dimen/margin_pfp"
         />
 
-    <Button
-        android:id="@+id/button_login"
-        android:layout_marginTop="@dimen/margin_button"
-        android:backgroundTint="@color/def_sign_in"
-        app:layout_constraintStart_toStartOf="parent"
+    <!-- Input Fields -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/text_button_login"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/fields"
-        >
-    </Button>
-
-
-    <LinearLayout
-        android:id="@+id/fields"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profilePicture"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_pic"
-        android:layout_marginTop="@dimen/margin_pfp"
-        >
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintWidth_percent="0.8"
 
-        <EditText
-            android:id="@+id/field_nick"
-            android:backgroundTint="@color/tint_def_white"
+        style="@style/TextFieldLayoutStyle"
+
+        android:layout_marginTop="@dimen/margin_pfp_fields">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/usernameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="@string/hint_nickname"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="@dimen/height_field"
-            android:background="@drawable/field_frame"
-            android:layout_width="@dimen/width_field"
-            android:textAlignment="center"
-            >
-        </EditText>
-        <EditText
-            android:id="@+id/field_pass"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/field_margin"
-            android:layout_width="@dimen/width_field"
-            android:textAlignment="center"
-            android:inputType="textPassword"
-            android:background="@drawable/field_frame"
-            android:backgroundTint="@color/tint_def_white"
-            android:hint="@string/hint_pass"
-            android:layout_height="@dimen/height_field"
-            >
-        </EditText>
-        <EditText
-            android:id="@+id/field_job"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/field_margin"
-            android:layout_width="@dimen/width_field"
-            android:textAlignment="center"
-            android:inputType="textPassword"
-            android:background="@drawable/field_frame"
-            android:backgroundTint="@color/tint_def_white"
-            android:hint="@string/hint_job"
-            android:layout_height="@dimen/height_field"
-            >
-        </EditText>
+            style="@style/TextInputFieldStyle"/>
 
-    </LinearLayout>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/inputLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintWidth_percent="0.8"
+
+        style="@style/TextFieldLayoutStyle"
+
+        android:layout_marginTop="@dimen/margin_field">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="@string/hint_pass"
+            style="@style/TextInputFieldStyle"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/inputLayout2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintWidth_percent="0.8"
+
+        style="@style/TextFieldLayoutStyle"
+
+        android:layout_marginTop="@dimen/margin_field">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/whatIDoEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="@string/hint_job"
+            style="@style/TextInputFieldStyle"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Sign In Button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/signUpButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_button_signup"
+        app:layout_constraintTop_toBottomOf="@id/inputLayout3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintWidth_percent="0.6"
+        android:layout_marginTop="@dimen/margin_button"
+        style="@style/PrimaryButtonStyle"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
