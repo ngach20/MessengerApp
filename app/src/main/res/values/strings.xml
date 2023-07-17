@@ -6,4 +6,7 @@
     <string name="text_button_login">SIGN IN</string>
     <string name="text_button_signup">SIGN UP</string>
     <string name="text_not_registered">Not registered?</string>
+
+    <string name="sign_out">sign out</string>
+    <string name="update">update</string>
 </resources>

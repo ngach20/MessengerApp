@@ -19,4 +19,10 @@
     <dimen name="elevation_button_primary">15dp</dimen>
     <dimen name="width_stroke_button_secondary">1dp</dimen>
     <dimen name="button_corner_radius">10dp</dimen>
+
+    <dimen name="margin_profile_top_pfp">100dp</dimen>
+    <dimen name="margin_profile_top_first_text_field">40dp</dimen>
+    <dimen name="margin_profile_top_second_text_field">20dp</dimen>
+    <dimen name="margin_profile_top_update_button">40dp</dimen>
+    <dimen name="margin_profile_top_sign_out_button">35dp</dimen>
 </resources>
