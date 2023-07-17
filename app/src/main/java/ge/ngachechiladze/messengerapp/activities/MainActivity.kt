@@ -8,18 +8,25 @@ import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import ge.ngachechiladze.messengerapp.Hasher
+import ge.ngachechiladze.messengerapp.dao.OnCancel
 import ge.ngachechiladze.messengerapp.databinding.SignInBinding
+import ge.ngachechiladze.messengerapp.dao.OnAuthorizationFail
+import ge.ngachechiladze.messengerapp.dao.OnAuthorizationSuccess
+import ge.ngachechiladze.messengerapp.viewmodels.UserViewModel
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: SignInBinding
+    private lateinit var userViewModel: UserViewModel
 
     private val registerActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -38,11 +45,20 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        userViewModel = ViewModelProvider(this@MainActivity)[UserViewModel::class.java]
+
         binding = SignInBinding.inflate(LayoutInflater.from(this))
 
         binding.signUpButton.setOnClickListener {
             val intent = Intent(this@MainActivity, SignUpActivity::class.java)
             registerActivityResult.launch(intent)
+        }
+
+        //This executes when login is successful
+        val userData = userViewModel.getUserData()
+        userData.observe(this) { user ->
+            Log.d("LOGIN SUCCESSFUL", "User id: ${user.id}")
+            Log.d("LOGIN SUCCESSFUL", "User nickname: ${user.nickname}")
         }
 
         binding.signInButton.setOnClickListener {
@@ -60,45 +76,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    fun login(nickname: String, passwordHash: String){
-        val usersRef = Firebase.database.getReference("users/$nickname")
+    private fun login(nickname: String, passwordHash: String){
 
-        usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    val passRef = Firebase.database.getReference("users/$nickname/password")
-
-                    passRef.addListenerForSingleValueEvent(object : ValueEventListener{
-                        override fun onDataChange(passSnapshot: DataSnapshot) {
-                            val retrievedPasswordHash = passSnapshot.value
-
-                            //Password is correct
-                            if(retrievedPasswordHash == passwordHash){
-                                /** TODO -------Authenticate----------- */
-
-                                Toast.makeText(this@MainActivity, "Login successful", Toast.LENGTH_SHORT).show()
-
-                                /** TODO --------Start new activity------ */
-
-                                finish()
-                            }else{
-                                Toast.makeText(this@MainActivity, "Incorrect user information", Toast.LENGTH_SHORT).show()
-                                Log.d("LOGIN", "Incorrect password")
-                            }
-                        }
-
-                        override fun onCancelled(error: DatabaseError) {
-                            Toast.makeText(this@MainActivity, "Failed to retrieve data from database", Toast.LENGTH_SHORT).show()
-                        }
-                    })
-                } else {
-                    Toast.makeText(this@MainActivity, "Incorrect user information", Toast.LENGTH_SHORT).show()
-                    Log.d("LOGIN", "Username does not exist")
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
+        userViewModel.login(nickname, passwordHash, object : OnCancel {
+            override fun onCancel() {
                 Toast.makeText(this@MainActivity, "Failed to retrieve data from database", Toast.LENGTH_SHORT).show()
+            }
+        }, object : OnAuthorizationFail {
+            override fun onAuthorizationFail() {
+                Toast.makeText(this@MainActivity, "Incorrect user information", Toast.LENGTH_SHORT).show()
+            }
+        }, object : OnAuthorizationSuccess {
+            override fun onAuthorizationSuccess() {
+                Toast.makeText(this@MainActivity, "Login success!", Toast.LENGTH_SHORT).show()
             }
         })
     }
