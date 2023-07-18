@@ -24,6 +24,9 @@
         <activity
             android:name="ge.ngachechiladze.messengerapp.activities.SignUpActivity"
             android:label="Sign Up" />
+
+        <activity android:name="ge.ngachechiladze.messengerapp.activities.MessagesActivity"
+            android:label="Messages"/>
     </application>
 
 

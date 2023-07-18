@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -45,13 +46,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //val uvm : UserViewModel by viewModels()
         userViewModel = ViewModelProvider(this@MainActivity)[UserViewModel::class.java]
 
         binding = SignInBinding.inflate(LayoutInflater.from(this))
 
         binding.signUpButton.setOnClickListener {
-            val intent = Intent(this@MainActivity, SignUpActivity::class.java)
-            registerActivityResult.launch(intent)
+            val signUpIntent = Intent(this@MainActivity, SignUpActivity::class.java)
+            registerActivityResult.launch(signUpIntent)
         }
 
         //This executes when login is successful
@@ -59,6 +61,14 @@ class MainActivity : AppCompatActivity() {
         userData.observe(this) { user ->
             Log.d("LOGIN SUCCESSFUL", "User id: ${user.id}")
             Log.d("LOGIN SUCCESSFUL", "User nickname: ${user.nickname}")
+
+            getSharedPreferences("login", MODE_PRIVATE).edit().putString("uid", user.id).apply()
+
+            /** ----Temporary activity---- */
+            val loginIntent = Intent(this@MainActivity, MessagesActivity::class.java)
+
+            startActivity(loginIntent)
+            finish()
         }
 
         binding.signInButton.setOnClickListener {

@@ -25,5 +25,4 @@ class UserViewModel : ViewModel() {
     fun register(user: User, onNicknameExists: OnNicknameExists, onCancel: OnCancel, onAuthorizationSuccess: OnAuthorizationSuccess){
         userDAO.createUser(user, onNicknameExists, onCancel, onAuthorizationSuccess)
     }
-
 }
