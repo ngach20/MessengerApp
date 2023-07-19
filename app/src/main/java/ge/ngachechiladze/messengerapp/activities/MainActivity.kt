@@ -59,12 +59,8 @@ class MainActivity : AppCompatActivity() {
         //This executes when login is successful
         val userData = userViewModel.getUserData()
         userData.observe(this) { user ->
-            Log.d("LOGIN SUCCESSFUL", "User id: ${user.id}")
-            Log.d("LOGIN SUCCESSFUL", "User nickname: ${user.nickname}")
-
             getSharedPreferences("login", MODE_PRIVATE).edit().putString("uid", user.id).apply()
 
-            /** ----Temporary activity---- */
             val loginIntent = Intent(this@MainActivity, MessagesActivity::class.java)
 
             startActivity(loginIntent)

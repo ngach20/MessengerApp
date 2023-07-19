@@ -49,17 +49,16 @@ class UserDAO {
         return user
     }
 
-    fun fetchUser(userData: MutableLiveData<User>, onCancel: OnCancel){
-        userData.value?.let { data ->
-            getUserInfo(data.id, object : OnGetUserInfo {
-                override fun onGetUserInfo(user: User) {
-                    userData.postValue(user)
-                }
-            }, onCancel)
-        }
+    fun fetchUserWithId(id: String, userData: MutableLiveData<User>, onCancel: OnCancel){
+        getUserInfo(id, object : OnGetUserInfo {
+            override fun onGetUserInfo(user: User) {
+                userData.postValue(user)
+            }
+        }, onCancel)
     }
 
-    fun initFetchUser(nickname: String, userData: MutableLiveData<User>, onCancel: OnCancel){
+    /** Only safe before user is authorized. */
+    fun fetchUserWithNickname(nickname: String, userData: MutableLiveData<User>, onCancel: OnCancel){
         val pairRef = getPairRef(nickname)
 
         pairRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -84,7 +83,6 @@ class UserDAO {
 
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                Log.d("Fetching user", "currently fetching user")
                 val nickname = snapshot.child("nickname").value.toString()
                 val passwordHash = snapshot.child("passwordHash").value.toString()
                 val occupation = snapshot.child("occupation").value.toString()

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dp"
-    >
+    android:padding="20dp">
 
     <!-- Profile picture -->
     <ImageView
@@ -29,7 +28,8 @@
         android:ellipsize="end"
         android:maxLines="1"
 
-        android:text="AAAAAAAAAAAAAAAAAAAAAAAAAAAAaa"
+        android:text=""
+
         app:layout_constraintEnd_toStartOf="@+id/date"
         app:layout_constraintStart_toEndOf="@+id/profilePicture"
         app:layout_constraintTop_toTopOf="parent" />
@@ -40,7 +40,9 @@
         android:id="@+id/date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="JUL 20"
+
+        android:text=""
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -56,14 +58,14 @@
 
         android:ellipsize="end"
         android:maxLines="2"
-        android:text="Hello this is my message: AAHGDHJAGSDGASJDGJAH ahdjhasdgjagd"
+
+        android:text="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 
         app:layout_constraintBottom_toBottomOf="parent"
 
         app:layout_constraintEnd_toStartOf="@+id/date"
         app:layout_constraintStart_toEndOf="@+id/profilePicture"
-        app:layout_constraintTop_toBottomOf="@+id/username"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/username" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

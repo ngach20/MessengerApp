@@ -8,10 +8,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
+import ge.ngachechiladze.messengerapp.adapters.UsersViewAdapter
 import ge.ngachechiladze.messengerapp.dao.OnCancel
 import ge.ngachechiladze.messengerapp.databinding.MessagesBinding
+import ge.ngachechiladze.messengerapp.models.Contact
 import ge.ngachechiladze.messengerapp.viewmodels.MessageViewModel
 import kotlin.math.abs
 
@@ -19,7 +22,6 @@ import kotlin.math.abs
 class MessagesActivity : AppCompatActivity() {
 
     private lateinit var messageViewModel: MessageViewModel
-    //private val userViewModel: UserViewModel by viewModels()
 
     private lateinit var binding: MessagesBinding
 
@@ -28,42 +30,30 @@ class MessagesActivity : AppCompatActivity() {
 
         val uid = getSharedPreferences("login", MODE_PRIVATE).getString("uid", "") ?: ""
 
-        messageViewModel = ViewModelProvider(this, MessageViewModel.Factory(uid, object : OnCancel{
-            override fun onCancel() {
-                Toast.makeText(this@MessagesActivity, "Could not connect to database", Toast.LENGTH_SHORT).show()
-            }
-        }))[MessageViewModel::class.java]
-
-        binding = MessagesBinding.inflate(LayoutInflater.from(this@MessagesActivity))
-
-
-        Log.d("MESSAGES ACTIVITY", "User id: $uid")
 
         if(uid != ""){
-            messageViewModel.loadAllMessages(
-                uid,
-                object : OnCancel {
-                    override fun onCancel() {
-                        Toast.makeText(
-                            this@MessagesActivity,
-                            "Sorry, messages could not be loaded!",
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                    }
+            messageViewModel = ViewModelProvider(this, MessageViewModel.Factory(uid, object : OnCancel{
+                override fun onCancel() {
+                    Toast.makeText(this@MessagesActivity, "Could not connect to database", Toast.LENGTH_SHORT).show()
                 }
-            )
+            }))[MessageViewModel::class.java]
+
+            binding = MessagesBinding.inflate(LayoutInflater.from(this@MessagesActivity))
+        }else{
+            Toast.makeText(this@MessagesActivity, "Sorry! Profile not found.", Toast.LENGTH_SHORT).show()
         }
 
-        messageViewModel.getAllMessages().observe(this@MessagesActivity) {messageList ->
-            if(messageList != null){
-                Log.d("MESSAGES", "Displaying all messages: ")
-                for(message in messageList){
-                    Log.d("MESSAGE", message.message)
-                }
-            }else{
-                Log.d("MESSAGES", "No messages to display!")
-            }
+
+
+        val usersRecyclerView = binding.usersRecyclerView
+        val contactsAdapter = UsersViewAdapter()
+        usersRecyclerView.adapter = contactsAdapter
+
+        messageViewModel.getAllContacts().observe(this@MessagesActivity) { contacts ->
+            contactsAdapter.users = contacts
+            contactsAdapter.notifyDataSetChanged()
         }
+
 
         val appBar = binding.appBar
         appBar.addOnOffsetChangedListener { _, verticalOffset ->
