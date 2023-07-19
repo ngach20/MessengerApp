@@ -1,30 +1,41 @@
 package ge.ngachechiladze.messengerapp.activities
 
+import android.R
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import ge.ngachechiladze.messengerapp.dao.OnCancel
 import ge.ngachechiladze.messengerapp.databinding.MessagesBinding
 import ge.ngachechiladze.messengerapp.viewmodels.MessageViewModel
-import ge.ngachechiladze.messengerapp.viewmodels.UserViewModel
+import kotlin.math.abs
+
 
 class MessagesActivity : AppCompatActivity() {
 
-    private val messageViewModel: MessageViewModel by viewModels()
-    private val userViewModel: UserViewModel by viewModels()
+    private lateinit var messageViewModel: MessageViewModel
+    //private val userViewModel: UserViewModel by viewModels()
 
     private lateinit var binding: MessagesBinding
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
+        val uid = getSharedPreferences("login", MODE_PRIVATE).getString("uid", "") ?: ""
+
+        messageViewModel = ViewModelProvider(this, MessageViewModel.Factory(uid, object : OnCancel{
+            override fun onCancel() {
+                Toast.makeText(this@MessagesActivity, "Could not connect to database", Toast.LENGTH_SHORT).show()
+            }
+        }))[MessageViewModel::class.java]
+
         binding = MessagesBinding.inflate(LayoutInflater.from(this@MessagesActivity))
 
-        val uid = getSharedPreferences("login", MODE_PRIVATE).getString("uid", "") ?: ""
 
         Log.d("MESSAGES ACTIVITY", "User id: $uid")
 
@@ -39,18 +50,27 @@ class MessagesActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT,
                         ).show()
                     }
-                },
+                }
             )
+        }
 
-            val messages = messageViewModel.getAllMessages().value
-            if(messages != null){
+        messageViewModel.getAllMessages().observe(this@MessagesActivity) {messageList ->
+            if(messageList != null){
                 Log.d("MESSAGES", "Displaying all messages: ")
-                for(message in messages){
+                for(message in messageList){
                     Log.d("MESSAGE", message.message)
                 }
             }else{
                 Log.d("MESSAGES", "No messages to display!")
             }
+        }
+
+        val appBar = binding.appBar
+        appBar.addOnOffsetChangedListener { _, verticalOffset ->
+            binding.appBarBackground.alpha = 1.0f - abs(
+                verticalOffset /
+                        appBar.totalScrollRange
+            )
         }
 
         setContentView(binding.root)

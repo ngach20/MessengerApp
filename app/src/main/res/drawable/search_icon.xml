@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:drawable="@drawable/baseline_search_black_18"
+        android:width="@dimen/scale_search_icon"
+        android:height="@dimen/scale_search_icon"
+        />
+
+</layer-list >
