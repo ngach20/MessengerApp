@@ -50,6 +50,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -62,5 +63,14 @@
             android:orientation="vertical"/>
 
     </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/no_contacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_contacts"
+        android:layout_gravity="center"
+        android:textSize="@dimen/no_contacts"
+        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

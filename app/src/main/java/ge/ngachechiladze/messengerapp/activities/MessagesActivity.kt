@@ -52,6 +52,14 @@ class MessagesActivity : AppCompatActivity() {
         messageViewModel.getAllContacts().observe(this@MessagesActivity) { contacts ->
             contactsAdapter.users = contacts
             contactsAdapter.notifyDataSetChanged()
+
+            if(contacts.isEmpty()){
+                binding.scrollView.visibility = View.GONE
+                binding.noContacts.visibility = View.VISIBLE
+            }else{
+                binding.scrollView.visibility = View.VISIBLE
+                binding.noContacts.visibility = View.GONE
+            }
         }
 
 
