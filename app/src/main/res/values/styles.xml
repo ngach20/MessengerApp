@@ -17,6 +17,27 @@
         <item name="boxStrokeWidthFocused">0dp</item>
     </style>
 
+    <style name="SearchInputFieldStyle">
+        <item name="android:textColorHint">@color/search_text_color_hint</item>
+        <item name="android:textColor">@color/color_text_field_text</item>
+        <item name="android:backgroundTint">@color/color_text_field</item>
+
+        <item name="android:background">@drawable/field_frame</item>
+
+        <item name="android:textSize">@dimen/size_text_input_field</item>
+
+        <item name="android:singleLine">true</item>
+        <item name="android:scrollHorizontally">true</item>
+
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+
+        <item name="android:drawableStart">@drawable/search_icon</item>
+        <item name="android:alpha">.5</item>
+        <item name="android:padding">@dimen/padding_search_bar</item>
+        <item name="android:drawablePadding">@dimen/padding_search_bar_drawable</item>
+    </style>
+
     <style name="TextFieldLayoutStyle">
         <item name="boxStrokeWidth">0dp</item>
         <item name="boxStrokeWidthFocused">0dp</item>

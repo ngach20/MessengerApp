@@ -19,4 +19,13 @@
     <dimen name="elevation_button_primary">15dp</dimen>
     <dimen name="width_stroke_button_secondary">1dp</dimen>
     <dimen name="button_corner_radius">10dp</dimen>
+
+    <dimen name="margin_tool_bar">16dp</dimen>
+    <dimen name="margin_search_bar_end">16dp</dimen>
+    <dimen name="padding_search_bar">10dp</dimen>
+    <dimen name="padding_search_bar_drawable">10dp</dimen>
+    <dimen name="scale_search_icon">30dp</dimen>
+
+    <dimen name="no_contacts">20sp</dimen>
+
 </resources>

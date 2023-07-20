@@ -14,9 +14,13 @@
     <color name="color_text_field_text">#7f818a</color>
 
     <color name="color_text_button_primary">#FFFFFFFF</color>
-    <color name="color_button_primary">#547cf4</color>
+    <color name="color_button_primary">#5071e2</color>
 
     <color name="color_text_button_secondary">#747474</color>
     <color name="color_border_button_secondary">#747474</color>
     <color name="color_button_secondary">#FFFFFFFF</color>
+
+    <color name="main">#5479F0</color>
+
+    <color name="search_text_color_hint">#494949</color>
 </resources>

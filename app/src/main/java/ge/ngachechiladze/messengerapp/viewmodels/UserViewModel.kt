@@ -17,7 +17,7 @@ class UserViewModel : ViewModel() {
         userDAO.checkCredentials(nickname, passwordHash, onCancel, object : OnAuthorizationSuccess {
             override fun onAuthorizationSuccess() {
                 onAuthorizationSuccess.onAuthorizationSuccess()
-                userDAO.initFetchUser(nickname, userData, onCancel)
+                userDAO.fetchUserWithNickname(nickname, userData, onCancel)
             }
         }, onAuthorizationFail)
     }
@@ -25,5 +25,4 @@ class UserViewModel : ViewModel() {
     fun register(user: User, onNicknameExists: OnNicknameExists, onCancel: OnCancel, onAuthorizationSuccess: OnAuthorizationSuccess){
         userDAO.createUser(user, onNicknameExists, onCancel, onAuthorizationSuccess)
     }
-
 }
