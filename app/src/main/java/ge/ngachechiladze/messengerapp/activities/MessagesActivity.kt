@@ -1,6 +1,6 @@
 package ge.ngachechiladze.messengerapp.activities
 
-import android.R
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -62,6 +62,10 @@ class MessagesActivity : AppCompatActivity() {
             }
         }
 
+        binding.fab.setOnClickListener {
+            val intent = Intent(this@MessagesActivity, SearchActivity::class.java)
+            startActivity(intent)
+        }
 
         val appBar = binding.appBar
         appBar.addOnOffsetChangedListener { _, verticalOffset ->
