@@ -27,6 +27,9 @@
 
         <activity android:name="ge.ngachechiladze.messengerapp.activities.MessagesActivity"
             android:label="Messages"/>
+
+        <activity android:name="ge.ngachechiladze.messengerapp.activities.SettingsActivity"
+            android:label="Settings"/>
     </application>
 
 

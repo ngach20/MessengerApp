@@ -1,6 +1,7 @@
 package ge.ngachechiladze.messengerapp.activities
 
 import android.R
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -72,5 +73,11 @@ class MessagesActivity : AppCompatActivity() {
         }
 
         setContentView(binding.root)
+
+
+        binding.bottomHome.settingsButton.setOnClickListener {
+            val intent = Intent(this@MessagesActivity, SettingsActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

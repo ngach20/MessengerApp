@@ -72,5 +72,8 @@
         android:layout_gravity="center"
         android:textSize="@dimen/no_contacts"
         />
+    <include
+        android:id="@+id/bottom_home"
+        layout="@layout/bottom_home" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

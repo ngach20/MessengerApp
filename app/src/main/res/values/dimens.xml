@@ -27,5 +27,7 @@
     <dimen name="scale_search_icon">30dp</dimen>
 
     <dimen name="no_contacts">20sp</dimen>
+    <dimen name="home_buttons_size">50dp</dimen>
+    <dimen name="margin_pfp_2">60dp</dimen>
 
 </resources>
