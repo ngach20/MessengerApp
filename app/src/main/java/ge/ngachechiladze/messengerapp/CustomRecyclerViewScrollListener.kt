@@ -71,42 +71,6 @@ abstract class EndlessRecyclerViewScrollListener(layoutManager: LinearLayoutMana
         }
     }
 
-/*    override fun onScrollStateChanged(view: RecyclerView, newState: Int) {
-        super.onScrollStateChanged(view, newState)
-
-        val totalItemCount = mLayoutManager.itemCount
-        val lastVisibleItemPosition: Int = (mLayoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-
-        if (!view.canScrollVertically(1)) {
-            // If the total item count is zero and the previous isn't, assume the
-            // list is invalidated and should be reset back to initial state
-            if (totalItemCount < previousTotalItemCount) {
-                currentPage = startingPageIndex
-                previousTotalItemCount = totalItemCount
-                if (totalItemCount == 0) {
-                    loading = true
-                }
-            }
-            // If it’s still loading, we check to see if the dataset count has
-            // changed, if so we conclude it has finished loading and update the current page
-            // number and total item count.
-            if (loading && (totalItemCount > previousTotalItemCount)) {
-                loading = false
-                previousTotalItemCount = totalItemCount
-            }
-
-            // If it isn’t currently loading, we check to see if we have breached
-            // the visibleThreshold and need to reload more data.
-            // If we do need to reload some more data, we execute onLoadMore to fetch the data.
-            // threshold should reflect how many total columns there are too
-            if (!loading && lastVisibleItemPosition + visibleThreshold > totalItemCount) {
-                currentPage++
-                onLoadMore(currentPage, totalItemCount, view)
-                loading = true
-            }
-        }
-    }*/
-
     // Call this method whenever performing new searches
     fun resetState() {
         currentPage = startingPageIndex
