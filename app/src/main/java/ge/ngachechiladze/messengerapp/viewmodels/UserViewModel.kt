@@ -13,6 +13,11 @@ class UserViewModel : ViewModel() {
 
     fun getUserData() : LiveData<User> = userData
 
+    fun getUserData(id: String, onCancel: OnCancel) : LiveData<User>{
+        userDAO.fetchUserWithId(id, userData, onCancel)
+        return userData
+    }
+
     fun login(nickname: String, passwordHash: String, onCancel: OnCancel, onAuthorizationFail: OnAuthorizationFail, onAuthorizationSuccess: OnAuthorizationSuccess){
         userDAO.checkCredentials(nickname, passwordHash, onCancel, object : OnAuthorizationSuccess {
             override fun onAuthorizationSuccess() {

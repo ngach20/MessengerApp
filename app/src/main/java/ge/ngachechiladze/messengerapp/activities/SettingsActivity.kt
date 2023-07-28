@@ -28,9 +28,15 @@ class SettingsActivity : AppCompatActivity()  {
             this.finish()
         }
 
-
-        binding.usernameEditText.setText(userViewModel.getUserData().value?.nickname ?: "N/A")
-        binding.jobEditText.setText(userViewModel.getUserData().value?.occupation ?: "N/A")
+        val uid = getSharedPreferences("login", MODE_PRIVATE).getString("uid", "") ?: ""
+        userViewModel.getUserData(uid, object : OnCancel {
+            override fun onCancel() {
+                Toast.makeText(this@SettingsActivity, "Failed to retrieve data from database", Toast.LENGTH_SHORT).show()
+            }
+        }).observe(this@SettingsActivity) { user ->
+            binding.usernameEditText.setText(user.nickname)
+            binding.jobEditText.setText(user.occupation)
+        }
 
     }
 }
