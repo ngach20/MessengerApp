@@ -16,3 +16,6 @@ data class Contact(var id: String, var nickname: String, var occupation: String,
         return id.hashCode()
     }
 }
+
+@IgnoreExtraProperties
+data class UserPublicData(var id: String, var nickname: String, var occupation: String)

@@ -1,17 +1,19 @@
 package ge.ngachechiladze.messengerapp.dao
 
 import android.net.Uri
+import android.annotation.SuppressLint
 import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import ge.ngachechiladze.messengerapp.models.User
+import ge.ngachechiladze.messengerapp.models.UserPublicData
 
 class UserDAO {
 
@@ -21,6 +23,7 @@ class UserDAO {
     private fun getUserPasswordRef(id: String) = Firebase.database.getReference("users/$id/password")
 
     private fun getPairRef(nickname: String) = Firebase.database.getReference("pairs/$nickname")
+    private fun getPairsRef(nickname: String) = Firebase.database.getReference("pairs")
 
     /** Creates a user with the given information.
      *  Ignores the parsed id. */
@@ -192,8 +195,52 @@ class UserDAO {
                 onCancel.onCancel()
             }
         })
-
     }
+
+    @SuppressLint("RestrictedApi")
+    fun fetchUserRange(
+        range: Int,
+        page: Int,
+        filter: String,
+        usersData: MutableLiveData<List<UserPublicData>>,
+        onCancel: () -> Unit
+    ) {
+        val query: Query = if(filter.isNotEmpty()){
+            getUsersRef().orderByChild("nickname").startAt(filter).endAt(filter + "\uf8ff").limitToFirst(range * (page + 1))
+        }else{
+            getUsersRef().orderByKey().limitToFirst(range * (page + 1))
+        }
+
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val users: HashMap<String, HashMap<String, Any>>? =
+                    snapshot.getValue<HashMap<String, HashMap<String, Any>>>()
+
+                if (users != null) {
+                    val userDataList = arrayListOf<UserPublicData>()
+                    val it = users.iterator()
+
+                    while (it.hasNext()) {
+                        val user = it.next().value
+                        val id = user["id"] as String
+
+                        val nickname = user["nickname"] as String
+                        val occupation = user["occupation"] as String
+
+                        val uData = UserPublicData(id, nickname, occupation)
+                        userDataList.add(uData)
+                    }
+
+                    usersData.value = userDataList
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                onCancel()
+            }
+        })
+    }
+
 }
 
 interface OnNicknameExists {

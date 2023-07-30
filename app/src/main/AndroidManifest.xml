@@ -14,7 +14,7 @@
         android:theme="@style/Theme.MessengerApp"
         tools:targetApi="31">
         <activity
-            android:name=".activities.MainActivity"
+            android:name="ge.ngachechiladze.messengerapp.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,6 +32,10 @@
 
         <activity android:name="ge.ngachechiladze.messengerapp.activities.SettingsActivity"
             android:label="Settings"/>
+      
+        <activity android:name="ge.ngachechiladze.messengerapp.activities.SearchActivity"
+            android:label="Search"/>
+
     </application>
 
 
