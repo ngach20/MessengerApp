@@ -29,5 +29,6 @@
     <dimen name="no_contacts">20sp</dimen>
     <dimen name="home_buttons_size">50dp</dimen>
     <dimen name="margin_pfp_2">60dp</dimen>
+    <dimen name="setting_pfp_size">200dp</dimen>
 
 </resources>

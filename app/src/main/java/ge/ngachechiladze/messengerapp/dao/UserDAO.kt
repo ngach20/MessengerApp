@@ -1,5 +1,6 @@
 package ge.ngachechiladze.messengerapp.dao
 
+import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
@@ -9,6 +10,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import ge.ngachechiladze.messengerapp.models.User
 
 class UserDAO {
@@ -119,14 +121,39 @@ class UserDAO {
 
     /** Updates the user nickname.
      *  Id is required. */
-    fun updateNickname(user: User){
-
+    fun updateNickname(user: User, processor: (Boolean) -> Unit){
+        createNicknameIdPair(user.nickname, user.id)
+        Firebase.database.getReference("users/${user.id}/nickname").setValue(user.nickname).addOnSuccessListener {
+            processor(true)
+        }.addOnFailureListener {
+            processor(false)
+        }
     }
 
     /** Updates the user occupation.
      *  Id is required. */
-    fun updateOccupation(user: User){
+    fun updateOccupation(user: User, processor: (Boolean) -> Unit){
+        Firebase.database.getReference("users/${user.id}/occupation").setValue(user.occupation).addOnSuccessListener {
+            processor(true)
+        }.addOnFailureListener {
+            processor(false)
+        }
+    }
 
+    fun updatePfp(uid: String, pfp: Uri, processor: (Boolean) -> Unit){
+        FirebaseStorage.getInstance().reference.child("pfps/$uid").putFile(pfp).addOnSuccessListener{
+            processor(true)
+        }.addOnFailureListener{
+            processor(false)
+        }
+    }
+
+    fun getPfp(uid: String,  processor: (Uri?) -> Unit){
+        FirebaseStorage.getInstance().reference.child("pfps/$uid").downloadUrl.addOnSuccessListener {
+            processor(it)
+        }.addOnFailureListener {
+            processor(null)
+        }
     }
 
     /** Updates the user entry.

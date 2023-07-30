@@ -5,11 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/profilePicture"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
+        android:layout_width="@dimen/setting_pfp_size"
+        android:layout_height="@dimen/setting_pfp_size"
         android:src="@drawable/avatar_image_placeholder"
         android:layout_marginTop="@dimen/margin_pfp_2"
         app:layout_constraintEnd_toEndOf="parent"
