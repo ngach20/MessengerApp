@@ -1,5 +1,6 @@
 package ge.ngachechiladze.messengerapp.activities
 
+import android.R
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -62,10 +63,6 @@ class MessagesActivity : AppCompatActivity() {
             }
         }
 
-        binding.fab.setOnClickListener {
-            val intent = Intent(this@MessagesActivity, SearchActivity::class.java)
-            startActivity(intent)
-        }
 
         val appBar = binding.appBar
         appBar.addOnOffsetChangedListener { _, verticalOffset ->
@@ -76,5 +73,11 @@ class MessagesActivity : AppCompatActivity() {
         }
 
         setContentView(binding.root)
+
+
+        binding.bottomHome.settingsButton.setOnClickListener {
+            val intent = Intent(this@MessagesActivity, SettingsActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -28,6 +30,9 @@
         <activity android:name="ge.ngachechiladze.messengerapp.activities.MessagesActivity"
             android:label="Messages"/>
 
+        <activity android:name="ge.ngachechiladze.messengerapp.activities.SettingsActivity"
+            android:label="Settings"/>
+      
         <activity android:name="ge.ngachechiladze.messengerapp.activities.SearchActivity"
             android:label="Search"/>
 
