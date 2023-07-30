@@ -25,6 +25,9 @@ class SettingsActivity : AppCompatActivity()  {
     private lateinit var userViewModel: UserViewModel
     private var pfpUrl: Uri? = null
 
+    private var nickname: String = ""
+    private var job: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = SettingsBinding.inflate(LayoutInflater.from(this))
@@ -55,6 +58,17 @@ class SettingsActivity : AppCompatActivity()  {
 
         val uid = getSharedPreferences("login", MODE_PRIVATE).getString("uid", "") ?: ""
 
+        userViewModel.getUserData(uid, object : OnCancel {
+            override fun onCancel() {
+                Toast.makeText(this@SettingsActivity, "Failed to retrieve data from database", Toast.LENGTH_SHORT).show()
+            }
+        }).observe(this@SettingsActivity) { user ->
+            binding.usernameEditText.setText(user.nickname)
+            binding.jobEditText.setText(user.occupation)
+            nickname = user.nickname
+            job = user.occupation
+        }
+
         updateDataDisplay(uid)
 
         binding.signOut.setOnClickListener {
@@ -69,15 +83,13 @@ class SettingsActivity : AppCompatActivity()  {
         }
 
         binding.updateButton.setOnClickListener{
-            val nickname = binding.usernameEditText.text.toString().trim()
+            val nicknamme = binding.usernameEditText.text.toString().trim()
             val occupation = binding.jobEditText.text.toString().trim()
 
-            if(nickname.isEmpty() || occupation.isEmpty()){
+            if(nicknamme.isEmpty() || occupation.isEmpty()){
                 Toast.makeText(this, "Please fill in all fields!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
-            println(pfpUrl)
 
             userViewModel.updateUserData(User(uid, nickname = binding.usernameEditText.text.toString(),"", occupation = binding.jobEditText.text.toString())){it ->
                 if(it){
@@ -95,23 +107,15 @@ class SettingsActivity : AppCompatActivity()  {
                     updateDataDisplay(uid)
                 }else{
                     Toast.makeText(this, "user data updating failed", Toast.LENGTH_SHORT).show()
+                    binding.usernameEditText.setText(nickname)
+                    binding.jobEditText.setText(job)
                     updateDataDisplay(uid)
                 }
             }
         }
     }
 
-    fun updateDataDisplay(uid: String){
-
-        userViewModel.getUserData(uid, object : OnCancel {
-            override fun onCancel() {
-                Toast.makeText(this@SettingsActivity, "Failed to retrieve data from database", Toast.LENGTH_SHORT).show()
-            }
-        }).observe(this@SettingsActivity) { user ->
-            binding.usernameEditText.setText(user.nickname)
-            binding.jobEditText.setText(user.occupation)
-        }
-
+    private fun updateDataDisplay(uid: String){
         userViewModel.getPfp(uid){
             if(it!=null){
                 Glide.with(this)
