@@ -12,16 +12,26 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
 import ge.ngachechiladze.messengerapp.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
+import ge.ngachechiladze.messengerapp.CACHE_ID
+import ge.ngachechiladze.messengerapp.CACHE_JOB
+import ge.ngachechiladze.messengerapp.CACHE_NICKNAME
 import ge.ngachechiladze.messengerapp.adapters.UsersViewAdapter
+import ge.ngachechiladze.messengerapp.adapters.UsersViewListener
 import ge.ngachechiladze.messengerapp.dao.OnCancel
 import ge.ngachechiladze.messengerapp.databinding.MessagesBinding
 import ge.ngachechiladze.messengerapp.viewmodels.MessageViewModel
+import ge.ngachechiladze.messengerapp.viewmodels.UserViewModel
 import kotlin.math.abs
 
 
-class MessagesActivity : AppCompatActivity() {
+class MessagesActivity : AppCompatActivity(), UsersViewListener {
 
     private lateinit var messageViewModel: MessageViewModel
+    lateinit var userViewModel: UserViewModel
+
 
     private lateinit var binding: MessagesBinding
 
@@ -39,6 +49,8 @@ class MessagesActivity : AppCompatActivity() {
                 }
             }))[MessageViewModel::class.java]
 
+            userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+
             binding = MessagesBinding.inflate(LayoutInflater.from(this@MessagesActivity))
         }else{
             Toast.makeText(this@MessagesActivity, "Sorry! Profile not found.", Toast.LENGTH_SHORT).show()
@@ -47,7 +59,7 @@ class MessagesActivity : AppCompatActivity() {
 
 
         val usersRecyclerView = binding.usersRecyclerView
-        val contactsAdapter = UsersViewAdapter()
+        val contactsAdapter = UsersViewAdapter(this,this)
         usersRecyclerView.adapter = contactsAdapter
 
         messageViewModel.getAllContacts().observe(this@MessagesActivity) { contacts ->
@@ -94,5 +106,14 @@ class MessagesActivity : AppCompatActivity() {
         }
 
         setContentView(binding.root)
+    }
+
+    private fun prepareJump(contact: Contact): Intent{
+        return Intent(this@MessagesActivity, ChatActivity::class.java).putExtra(CACHE_NICKNAME, contact.nickname).putExtra(CACHE_ID, contact.id).
+        putExtra(CACHE_JOB, contact.occupation)
+    }
+
+    override fun onClickListener(contact: Contact) {
+        startActivity(prepareJump(contact))
     }
 }

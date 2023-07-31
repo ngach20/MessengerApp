@@ -1,5 +1,6 @@
 package ge.ngachechiladze.messengerapp.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,22 +13,30 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ge.ngachechiladze.messengerapp.CACHE_ID
+import ge.ngachechiladze.messengerapp.CACHE_JOB
+import ge.ngachechiladze.messengerapp.CACHE_NICKNAME
 import ge.ngachechiladze.messengerapp.adapters.SearchUsersViewAdapter
 import ge.ngachechiladze.messengerapp.databinding.MessagesBinding
 import ge.ngachechiladze.messengerapp.EndlessRecyclerViewScrollListener
 import ge.ngachechiladze.messengerapp.databinding.SearchPageBinding
+import ge.ngachechiladze.messengerapp.adapters.SearchUsersViewListener
+import ge.ngachechiladze.messengerapp.models.Contact
+import ge.ngachechiladze.messengerapp.models.UserPublicData
 import ge.ngachechiladze.messengerapp.viewmodels.SearchUsersViewModel
+import ge.ngachechiladze.messengerapp.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class SearchActivity : AppCompatActivity(){
+class SearchActivity : AppCompatActivity(), SearchUsersViewListener {
 
     private lateinit var binding: SearchPageBinding
 
     private lateinit var searchUsersViewModel: SearchUsersViewModel
+    lateinit var userViewModel: UserViewModel
 
     private val batchSize = 7
     private val debouncer = Debouncer(500)
@@ -48,8 +57,10 @@ class SearchActivity : AppCompatActivity(){
         val uid = getSharedPreferences("login", MODE_PRIVATE).getString("uid", "") ?: ""
 
         searchUsersViewModel = ViewModelProvider(this@SearchActivity)[SearchUsersViewModel::class.java]
+        userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+
         loadBatch(0)
-        val adapter = SearchUsersViewAdapter()
+        val adapter = SearchUsersViewAdapter(this,this)
         binding.usersRecyclerView.adapter = adapter
         searchUsersViewModel.getSearchedUsers().observe(this@SearchActivity) { usersData ->
             adapter.users = usersData
@@ -63,6 +74,10 @@ class SearchActivity : AppCompatActivity(){
             }
         }
         binding.usersRecyclerView.addOnScrollListener(scrollListener)
+
+        binding.bottomHome.addButton.visibility = View.GONE
+        binding.bottomHome.homeButton .visibility = View.GONE
+        binding.bottomHome.settingsButton.visibility = View.GONE
 
         binding.searchBar.addTextChangedListener(
             object : TextWatcher{
@@ -102,6 +117,17 @@ class SearchActivity : AppCompatActivity(){
             Toast.makeText(this@SearchActivity, "Could not connect to database!", Toast.LENGTH_SHORT).show()
         }
     }
+
+    override fun onClickListener(udata: UserPublicData) {
+        startActivity(prepareJump(udata))
+    }
+
+    private fun prepareJump(udata: UserPublicData): Intent {
+        return Intent(this@SearchActivity, ChatActivity::class.java).putExtra(CACHE_NICKNAME, udata.nickname).putExtra(
+            CACHE_ID, udata.id).
+        putExtra(CACHE_JOB, udata.occupation)
+    }
+
 
 }
 

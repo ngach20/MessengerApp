@@ -2,6 +2,12 @@ package ge.ngachechiladze.messengerapp
 
 import java.security.MessageDigest
 
+const val CACHE_NICKNAME = "n1"
+const val CACHE_ID = "n2"
+const val CACHE_JOB = "n3"
+const val SENDING_ID = 2
+const val RECEIVING_ID = 1
+
 object Hasher {
     public fun hashString(input: String): String {
         val HEX_CHARS = "0123456789ABCDEF"

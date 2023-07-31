@@ -7,7 +7,7 @@
     android:padding="20dp">
 
     <!-- Profile picture -->
-    <ImageView
+    <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/profilePicture"
         android:layout_width="50dp"
         android:layout_height="50dp"

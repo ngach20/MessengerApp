@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //val uvm : UserViewModel by viewModels()
         userViewModel = ViewModelProvider(this@MainActivity)[UserViewModel::class.java]
 
         binding = SignInBinding.inflate(LayoutInflater.from(this))

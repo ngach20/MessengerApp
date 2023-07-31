@@ -33,5 +33,24 @@
     <dimen name="home_buttons_size">50dp</dimen>
     <dimen name="margin_pfp_2">60dp</dimen>
     <dimen name="setting_pfp_size">200dp</dimen>
+    <dimen name="topbarchatH">150dp</dimen>
+    <dimen name="chat_margin_1">16dp</dimen>
+    <dimen name="chat_margin_2">25dp</dimen>
+    <dimen name="chat_size_1">18sp</dimen>
+    <dimen name="chat_top_img_size">90dp</dimen>
+    <dimen name="chatimgsz2">50dp</dimen>
+    <dimen name="border_sz_chat">2dp</dimen>
+    <dimen name="artificial_margin_chat">80dp</dimen>
+    <dimen name="chat_h2">60dp</dimen>
+    <dimen name="leftmostchat">20dp</dimen>
+    <dimen name="rightmostchat">50dp</dimen>
+    <dimen name="collapsed_size">150dp</dimen>
+    <dimen name="marginpfpendchat">25dp</dimen>
+    <dimen name="bottom_margin_sendfield">10dp</dimen>
+    <dimen name="marg1msg">10dp</dimen>
+    <dimen name="cutoff_bubble">100dp</dimen>
+    <dimen name="msg_w">250dp</dimen>
+    <dimen name="mrg1">20dp</dimen>
+    <dimen name="res0">0dp</dimen>
 
 </resources>

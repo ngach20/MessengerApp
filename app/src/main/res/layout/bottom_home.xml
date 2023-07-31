@@ -18,6 +18,18 @@
         app:srcCompat="@drawable/baseline_home_24" />
 
     <ImageButton
+        android:id="@+id/addButton"
+        android:layout_width="@dimen/home_buttons_size"
+        android:layout_height="@dimen/home_buttons_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/baseline_add_circle_24" />
+
+    <ImageButton
         android:id="@+id/settingsButton"
         android:layout_width="@dimen/home_buttons_size"
         android:layout_height="@dimen/home_buttons_size"
