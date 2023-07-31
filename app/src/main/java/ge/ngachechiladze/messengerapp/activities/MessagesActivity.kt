@@ -22,6 +22,7 @@ import ge.ngachechiladze.messengerapp.adapters.UsersViewAdapter
 import ge.ngachechiladze.messengerapp.adapters.UsersViewListener
 import ge.ngachechiladze.messengerapp.dao.OnCancel
 import ge.ngachechiladze.messengerapp.databinding.MessagesBinding
+import ge.ngachechiladze.messengerapp.models.Contact
 import ge.ngachechiladze.messengerapp.viewmodels.MessageViewModel
 import ge.ngachechiladze.messengerapp.viewmodels.UserViewModel
 import kotlin.math.abs
