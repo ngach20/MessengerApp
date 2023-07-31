@@ -5,7 +5,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -31,7 +33,6 @@ class SettingsActivity : AppCompatActivity()  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = SettingsBinding.inflate(LayoutInflater.from(this))
-        setContentView(binding.root)
 
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
 
@@ -49,11 +50,6 @@ class SettingsActivity : AppCompatActivity()  {
                     binding.profilePicture.setImageURI(data.data)
                 }
             }
-
-        binding.bottomHome.homeButton.setOnClickListener {
-            val intent = Intent(this@SettingsActivity, MessagesActivity::class.java)
-            startActivity(intent)
-        }
 
         val uid = getSharedPreferences("login", MODE_PRIVATE).getString("uid", "") ?: ""
 
@@ -113,6 +109,30 @@ class SettingsActivity : AppCompatActivity()  {
                 }
             }
         }
+
+        menuInflater.inflate(R.menu.bottom_bar_menu_left, binding.home.menu)
+
+        binding.home.setOnMenuItemClickListener { item ->
+            when(item.itemId){
+                R.id.action_home -> {
+                    val messagesIntent = Intent(this@SettingsActivity, MessagesActivity::class.java)
+                    startActivity(messagesIntent)
+                    finish()
+                    true
+                }
+
+                else -> {
+                    true
+                }
+            }
+        }
+
+        binding.searchFab.setOnClickListener {
+            val searchIntent = Intent(this@SettingsActivity, SearchActivity::class.java)
+            startActivity(searchIntent)
+        }
+
+        setContentView(binding.root)
     }
 
     private fun updateDataDisplay(uid: String){

@@ -19,6 +19,7 @@ import ge.ngachechiladze.messengerapp.CACHE_NICKNAME
 import ge.ngachechiladze.messengerapp.adapters.SearchUsersViewAdapter
 import ge.ngachechiladze.messengerapp.databinding.MessagesBinding
 import ge.ngachechiladze.messengerapp.EndlessRecyclerViewScrollListener
+import ge.ngachechiladze.messengerapp.databinding.SearchPageBinding
 import ge.ngachechiladze.messengerapp.adapters.SearchUsersViewListener
 import ge.ngachechiladze.messengerapp.models.Contact
 import ge.ngachechiladze.messengerapp.models.UserPublicData
@@ -32,8 +33,7 @@ import kotlinx.coroutines.launch
 
 class SearchActivity : AppCompatActivity(), SearchUsersViewListener {
 
-    /** TODO: To be changed later */
-    private lateinit var binding: MessagesBinding
+    private lateinit var binding: SearchPageBinding
 
     private lateinit var searchUsersViewModel: SearchUsersViewModel
     lateinit var userViewModel: UserViewModel
@@ -46,9 +46,7 @@ class SearchActivity : AppCompatActivity(), SearchUsersViewListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = MessagesBinding.inflate(LayoutInflater.from(this@SearchActivity))
-        /** TODO: Change later */
-        binding.noContacts.visibility = View.GONE
+        binding = SearchPageBinding.inflate(LayoutInflater.from(this@SearchActivity))
 
         scrollListener = object : EndlessRecyclerViewScrollListener(binding.usersRecyclerView.layoutManager as LinearLayoutManager) {
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
@@ -68,6 +66,11 @@ class SearchActivity : AppCompatActivity(), SearchUsersViewListener {
             adapter.users = usersData
             this.runOnUiThread {
                 adapter.notifyDataSetChanged()
+                if(adapter.users.isEmpty()){
+                    binding.noUsers.visibility = View.VISIBLE
+                }else{
+                    binding.noUsers.visibility = View.GONE
+                }
             }
         }
         binding.usersRecyclerView.addOnScrollListener(scrollListener)
@@ -94,6 +97,10 @@ class SearchActivity : AppCompatActivity(), SearchUsersViewListener {
                 }
             }
         )
+
+        binding.backButton.setOnClickListener {
+            finish()
+        }
 
         setContentView(binding.root)
     }
