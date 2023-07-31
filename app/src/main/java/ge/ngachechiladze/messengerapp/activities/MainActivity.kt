@@ -78,8 +78,20 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, "Please fill all fields!", Toast.LENGTH_SHORT).show()
             }
         }
-
         setContentView(binding.root)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val uid = getSharedPreferences("login", MODE_PRIVATE).getString("uid", "") ?: ""
+
+        //User was already authorized
+        if(uid != ""){
+            val messagesIntent = Intent(this@MainActivity, MessagesActivity::class.java)
+            startActivity(messagesIntent)
+            finish()
+        }
     }
 
     private fun login(nickname: String, passwordHash: String){
