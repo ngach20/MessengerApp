@@ -53,7 +53,6 @@ class SettingsActivity : AppCompatActivity()  {
         binding.bottomHome.homeButton.setOnClickListener {
             val intent = Intent(this@SettingsActivity, MessagesActivity::class.java)
             startActivity(intent)
-            this.finish()
         }
 
         val uid = getSharedPreferences("login", MODE_PRIVATE).getString("uid", "") ?: ""
@@ -100,11 +99,12 @@ class SettingsActivity : AppCompatActivity()  {
                             }else{
                                 Toast.makeText(this, "user pfp uploading failed", Toast.LENGTH_SHORT).show()
                             }
+                            updateDataDisplay(uid)
                         }
                     }else {
                         Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show()
+                        updateDataDisplay(uid)
                     }
-                    updateDataDisplay(uid)
                 }else{
                     Toast.makeText(this, "user data updating failed", Toast.LENGTH_SHORT).show()
                     binding.usernameEditText.setText(nickname)

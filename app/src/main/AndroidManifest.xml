@@ -32,9 +32,12 @@
 
         <activity android:name="ge.ngachechiladze.messengerapp.activities.SettingsActivity"
             android:label="Settings"/>
-      
+
         <activity android:name="ge.ngachechiladze.messengerapp.activities.SearchActivity"
             android:label="Search"/>
+
+        <activity android:name="ge.ngachechiladze.messengerapp.activities.ChatActivity"
+            android:label="Chat"/>
 
     </application>
 

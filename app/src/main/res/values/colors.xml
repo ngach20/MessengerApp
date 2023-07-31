@@ -8,6 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="tint_def_white">#EFF4F4</color>
+    <color name="bubble_in">#edf3f7</color>
+    <color name="blue">#5479F1</color>
+    <color name="grey">#5C5C5C</color>
 
     <color name="color_text_field">#f3f6ff</color>
     <color name="color_text_field_hint">#afb1b5</color>

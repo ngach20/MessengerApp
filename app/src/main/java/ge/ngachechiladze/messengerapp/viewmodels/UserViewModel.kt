@@ -32,6 +32,10 @@ class UserViewModel : ViewModel() {
         userDAO.createUser(user, onNicknameExists, onCancel, onAuthorizationSuccess)
     }
 
+    fun setBatmanImage(uid: String, uri: Uri){
+        userDAO.setBatmanImage(uid,uri)
+    }
+
     fun updateUserData(user: User, processor: (Boolean) -> Unit){
         userDAO.updateNickname(user){it ->
             if(it){

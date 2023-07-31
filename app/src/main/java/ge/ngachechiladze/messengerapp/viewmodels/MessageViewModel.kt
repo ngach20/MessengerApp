@@ -12,6 +12,7 @@ import ge.ngachechiladze.messengerapp.models.Message
 class MessageViewModel(private val uid: String, private val onCancel: OnCancel) : ViewModel() {
 
     private val contacts: MutableLiveData<List<Contact>> = MutableLiveData()
+    private lateinit var messages: MutableList<Message>
 
     private val messageDAO: MessageDAO = MessageDAO()
 
@@ -21,6 +22,24 @@ class MessageViewModel(private val uid: String, private val onCancel: OnCancel) 
     }
 
     fun getAllContacts(): LiveData<List<Contact>> = contacts
+
+
+
+    fun getMessages(processor: (MutableList<Message>) -> Unit){
+        messages.sortBy{ message -> message.time }
+        processor(messages)
+    }
+
+    fun setMessagesWatcher(uid: String, target_uid: String, processor: (Unit) -> Unit){
+        messageDAO.getMessages(uid, target_uid){
+            messages = it
+            processor(Unit)
+        }
+    }
+
+    fun sendMessage(message: Message){
+        messageDAO.sendMessage(message)
+    }
 
     class Factory(private val uid: String, private val onCancel: OnCancel) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
