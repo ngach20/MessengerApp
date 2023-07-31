@@ -70,9 +70,30 @@
         android:layout_height="wrap_content"
         android:text="@string/no_contacts"
         android:layout_gravity="center"
-        android:textSize="@dimen/no_contacts"
+        android:textSize="@dimen/no_contacts" />
+
+
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        style="@style/Widget.MaterialComponents.BottomAppBar"
+        app:hideOnScroll="true"
+        app:menu="@menu/bottom_bar_menu_right">
+        <androidx.appcompat.widget.ActionMenuView
+            android:id="@+id/home"
+            android:layout_width="wrap_content"
+            android:layout_height="?actionBarSize" />
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/add_48px"
+        app:layout_anchor="@id/bottomAppBar"
+        android:id="@+id/searchFab"
         />
-    <include
-        android:id="@+id/bottom_home"
-        layout="@layout/bottom_home" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

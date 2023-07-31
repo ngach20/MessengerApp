@@ -1,21 +1,20 @@
 package ge.ngachechiladze.messengerapp.activities
 
-import android.R
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
+import ge.ngachechiladze.messengerapp.R
 import ge.ngachechiladze.messengerapp.adapters.UsersViewAdapter
 import ge.ngachechiladze.messengerapp.dao.OnCancel
 import ge.ngachechiladze.messengerapp.databinding.MessagesBinding
-import ge.ngachechiladze.messengerapp.models.Contact
 import ge.ngachechiladze.messengerapp.viewmodels.MessageViewModel
 import kotlin.math.abs
 
@@ -26,6 +25,7 @@ class MessagesActivity : AppCompatActivity() {
 
     private lateinit var binding: MessagesBinding
 
+    @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
@@ -71,13 +71,28 @@ class MessagesActivity : AppCompatActivity() {
                         appBar.totalScrollRange
             )
         }
+        menuInflater.inflate(R.menu.bottom_bar_menu_left_selected, binding.home.menu)
+
+        binding.bottomAppBar.setOnMenuItemClickListener { item ->
+            when(item.itemId){
+                R.id.action_settings -> {
+                    val settingsIntent = Intent(this@MessagesActivity, SettingsActivity::class.java)
+                    startActivity(settingsIntent)
+                    finish()
+                    true
+                }
+
+                else -> {
+                    true
+                }
+            }
+        }
+
+        binding.searchFab.setOnClickListener {
+            val searchIntent = Intent(this@MessagesActivity, SearchActivity::class.java)
+            startActivity(searchIntent)
+        }
 
         setContentView(binding.root)
-
-
-        binding.bottomHome.settingsButton.setOnClickListener {
-            val intent = Intent(this@MessagesActivity, SettingsActivity::class.java)
-            startActivity(intent)
-        }
     }
 }

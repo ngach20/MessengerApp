@@ -23,4 +23,7 @@
     <color name="main">#5479F0</color>
 
     <color name="search_text_color_hint">#494949</color>
+
+    <color name="color_bottom_bar_action_button_not_selected">#494949</color>
+    <color name="color_bottom_bar_action_button_selected">#5479F0</color>
 </resources>

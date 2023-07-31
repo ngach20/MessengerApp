@@ -11,4 +11,6 @@
     <string name="no_contacts">No contacts to show</string>
     <string name="update_text">Update</string>
     <string name="sign_out_text">SIGN OUT</string>
+    <string name="home">Home</string>
+    <string name="settings">Settings</string>
 </resources>
