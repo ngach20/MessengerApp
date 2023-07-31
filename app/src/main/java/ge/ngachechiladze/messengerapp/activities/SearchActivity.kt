@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ge.ngachechiladze.messengerapp.adapters.SearchUsersViewAdapter
 import ge.ngachechiladze.messengerapp.databinding.MessagesBinding
 import ge.ngachechiladze.messengerapp.EndlessRecyclerViewScrollListener
+import ge.ngachechiladze.messengerapp.databinding.SearchPageBinding
 import ge.ngachechiladze.messengerapp.viewmodels.SearchUsersViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,8 +25,7 @@ import kotlinx.coroutines.launch
 
 class SearchActivity : AppCompatActivity(){
 
-    /** TODO: To be changed later */
-    private lateinit var binding: MessagesBinding
+    private lateinit var binding: SearchPageBinding
 
     private lateinit var searchUsersViewModel: SearchUsersViewModel
 
@@ -37,9 +37,7 @@ class SearchActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = MessagesBinding.inflate(LayoutInflater.from(this@SearchActivity))
-        /** TODO: Change later */
-        binding.noContacts.visibility = View.GONE
+        binding = SearchPageBinding.inflate(LayoutInflater.from(this@SearchActivity))
 
         scrollListener = object : EndlessRecyclerViewScrollListener(binding.usersRecyclerView.layoutManager as LinearLayoutManager) {
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
@@ -57,6 +55,11 @@ class SearchActivity : AppCompatActivity(){
             adapter.users = usersData
             this.runOnUiThread {
                 adapter.notifyDataSetChanged()
+                if(adapter.users.isEmpty()){
+                    binding.noUsers.visibility = View.VISIBLE
+                }else{
+                    binding.noUsers.visibility = View.GONE
+                }
             }
         }
         binding.usersRecyclerView.addOnScrollListener(scrollListener)
@@ -79,6 +82,10 @@ class SearchActivity : AppCompatActivity(){
                 }
             }
         )
+
+        binding.backButton.setOnClickListener {
+            finish()
+        }
 
         setContentView(binding.root)
     }
