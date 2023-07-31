@@ -3,6 +3,7 @@ package ge.ngachechiladze.messengerapp.activities
 import android.app.Activity
 import android.app.Instrumentation.ActivityResult
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
@@ -17,6 +18,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import ge.ngachechiladze.messengerapp.Hasher
+import ge.ngachechiladze.messengerapp.R
 import ge.ngachechiladze.messengerapp.dao.OnCancel
 import ge.ngachechiladze.messengerapp.dao.OnNicknameExists
 import ge.ngachechiladze.messengerapp.databinding.SignUpBinding
@@ -64,6 +66,8 @@ class SignUpActivity : AppCompatActivity() {
             }
         }, object : OnAuthorizationSuccess {
             override fun onAuthorizationSuccess() {
+                userViewModel.setBatmanImage(user.id, Uri.parse("android.resource://${packageName}/${R.drawable.avatar_image_placeholder}"))
+
                 val result = Intent()
                 result.putExtra("nickname", user.nickname)
                 result.putExtra("passwordHash", user.passwordHash)

@@ -25,6 +25,10 @@ class UserDAO {
     private fun getPairRef(nickname: String) = Firebase.database.getReference("pairs/$nickname")
     private fun getPairsRef(nickname: String) = Firebase.database.getReference("pairs")
 
+    fun setBatmanImage(uid: String, uri: Uri) {
+        FirebaseStorage.getInstance().reference.child("pfps/$uid").putFile(uri)
+    }
+
     /** Creates a user with the given information.
      *  Ignores the parsed id. */
     fun createUser(user: User, onNicknameExists: OnNicknameExists, onCancel: OnCancel, onAuthorizationSuccess: OnAuthorizationSuccess) : User{
