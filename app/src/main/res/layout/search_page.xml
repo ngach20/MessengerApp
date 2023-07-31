@@ -26,21 +26,24 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
-                android:layout_height="?android:actionBarSize"
+                android:layout_height="100dp"
                 app:layout_collapseMode="pin"
                 android:layout_gravity="bottom"
-                android:layout_marginBottom="@dimen/margin_tool_bar">
+                android:layout_marginBottom="@dimen/margin_tool_bar"
+                android:paddingTop="@dimen/padding_toolbar_top">
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/backButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="@drawable/arrow_back_ios_48px"/>
+                    android:background="@drawable/arrow_back_ios_48px"
+                    android:layout_marginTop="@dimen/margin_back_button"
+                    android:layout_marginBottom="@dimen/margin_back_button"/>
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/searchBar"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:inputType="text"
                     style="@style/SearchInputFieldStyle"
                     android:hint="@string/search"
